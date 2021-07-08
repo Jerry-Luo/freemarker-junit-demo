@@ -34,9 +34,34 @@
             <version>2.3.31</version>
         </dependency>
 
+        <!-- JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage
+
+            The JUnit Platform serves as a foundation for launching testing frameworks on the JVM.
+            It also defines the TestEngine API for developing a testing framework that runs on the platform.
+            Furthermore, the platform provides a Console Launcher to launch the platform from the command line and a JUnit 4 based
+            Runner for running any TestEngine on the platform in a JUnit 4 based environment.
+            First-class support for the JUnit Platform also exists in popular IDEs (see IntelliJ IDEA, Eclipse, NetBeans, and Visual Studio Code)
+            and build tools (see Gradle, Maven, and Ant).
+
+            JUnit Jupiter is the combination of the new programming model and extension model for writing tests and extensions in JUnit 5.
+            The Jupiter sub-project provides a TestEngine for running Jupiter based tests on the platform.
+
+            JUnit Vintage provides a TestEngine for running JUnit 3 and JUnit 4 based tests on the platform.
+        -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Even though the assertion facilities provided by JUnit Jupiter are sufficient for many testing scenarios,
+             there are times when more power and additional functionality such as matchers are desired or required.
+             In such cases, the JUnit team recommends the use of third-party assertion libraries such as AssertJ, Hamcrest, Truth, etc.
+             Developers are therefore free to use the assertion library of their choice.
+         -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
