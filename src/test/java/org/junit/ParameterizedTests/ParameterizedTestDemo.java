@@ -1,10 +1,20 @@
 package org.junit.ParameterizedTests;
 
+import org.junit.assertions.AssertionsDemo;
 import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 import org.junit.jupiter.params.provider.*;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
@@ -225,4 +235,59 @@ public class ParameterizedTestDemo {
         }
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "Jane, Doe, F, 1990-05-20",
+            "John, Doe, M, 1990-10-22"
+    })
+    void testWithArgumentsAccessor(ArgumentsAccessor arguments) {
+        //AssertionsDemo.Person person = new AssertionsDemo.Person(arguments.getString(0),
+        //        arguments.getString(1),
+        //        arguments.get(2, Gender.class),
+        //        arguments.get(3, LocalDate.class));
+        //
+        //if (person.getFirstName().equals("Jane")) {
+        //    assertEquals(Gender.F, person.getGender());
+        //}
+        //else {
+        //    assertEquals(Gender.M, person.getGender());
+        //}
+        //assertEquals("Doe", person.getLastName());
+        //assertEquals(1990, person.getDateOfBirth().getYear());
+        System.out.println(arguments);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Jane, Doe, F, 1990-05-20",
+            "John, Doe, M, 1990-10-22"
+    })
+    void testWithArgumentsAggregator(@AggregateWith(PersonAggregator.class) AssertionsDemo.Person person) {
+        // perform assertions against person
+    }
+
+    public class PersonAggregator implements ArgumentsAggregator {
+        @Override
+        public AssertionsDemo.Person aggregateArguments(ArgumentsAccessor arguments, ParameterContext context) {
+            //return new AssertionsDemo.Person(arguments.getString(0),
+            //        arguments.getString(1),
+            //        arguments.get(2, Gender.class),
+            //        arguments.get(3, LocalDate.class));
+            return null;
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Jane, Doe, F, 1990-05-20",
+            "John, Doe, M, 1990-10-22"
+    })
+    void testWithCustomAggregatorAnnotation(@CsvToPerson AssertionsDemo.Person person) {
+        // perform assertions against person
+    }
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.PARAMETER)
+    @AggregateWith(PersonAggregator.class)
+    public @interface CsvToPerson {
+    }
 }

@@ -16,7 +16,7 @@ public class AssertionsDemo {
     private final MyFirstJUnitJupiterTests.Calculator calculator = new MyFirstJUnitJupiterTests.Calculator();
 
     private final Person person = new Person("Jane", "Doe");
-    static class Person{
+    public static class Person{
         private String firstName;
         private String lastName;
         public Person(String firstName, String lastName){
